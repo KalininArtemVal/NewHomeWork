@@ -18,7 +18,7 @@ let checker = Checker()
 // не принимает никаких параметров и просто возвращает строку "Hello, world!" (без кавычек).
 
 func firstFunction() -> String {
-    <#T##Ваше решение#>
+    "Hello, world!"
 }
 
 // Передача функции на проверку
@@ -33,9 +33,8 @@ checker.checkFirstFunction(function: firstFunction)
 // следует. Более подробная информация об Optionals представлена в одноименной лекции.
 
 func secondFunction(lhs: String, rhs: String) -> Int {
-    <#T##Ваше решение#>
+    return Int(lhs)!+Int(rhs)!
 }
-
 // Передача второй функции на проверку
 checker.checkSecondFunction(function: secondFunction)
 
@@ -47,8 +46,35 @@ checker.checkSecondFunction(function: secondFunction)
 // заканчивается успешно. Поэтому не нужно использовать восклицательный знак.
 
 func thirdFunction(_ currency: Checker.Currency, _ amount: Int) -> String {
-    <#T##Ваше решение#>
+    
+    var res = ""
+    
+    switch currency {
+    case .usd:
+        res = "$"
+    case .rub:
+        res = "₽"
+    case .eur:
+        res = "€"
+    default:
+        print("unknow element")
+    }
+
+    if amount < 0 {
+        let newValue = amount * -1
+        return "(\(newValue)) \(res)"
+    }
+    return "\(amount) \(res)"
 }
 
 // Передача третьей функции на проверку
 checker.checkThirdFunction(function: thirdFunction)
+
+/// Передайте в этот метод функцию, принимающую валюту в виде Currency и целочисленную сумму.
+/// Возвращать она должна строку, содержащую сумму и символ валюты. Обратите внимание, что
+/// отрицательные числа нужно отображать в скобках и без минуса. Если ваше решение окажется
+/// правильным, то в консоли вы увидите еще одну часть кодового слова.
+/// Например:
+/// .rub, 100 -> "100 ₽";
+/// .eur, 0 -> "0 €";
+/// .usd, -100 -> "(100) $";
