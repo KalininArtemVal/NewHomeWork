@@ -46,40 +46,40 @@ checker.checkFirstFunction(function: findEven)
 
 
 // -------------------
-func change(circle: [Checker.Circle]) -> [Checker.Circle] {
+func change(circles: [Checker.Circle]) -> [Checker.Circle] {
 
 
-    var newRadius: Double = 0.0
-    var color: Checker.Color = .black
-    var newArray = [Checker.Circle]()
+    var changeCircle = [Checker.Circle]()
     
-    for element in circle {
-        switch element.color {
-        case .green:
-            color = .blue
-            newRadius = element.radius
-            newArray.append(element)
-        case .blue:
-            color = .blue
-            newRadius = element.radius
-            newArray.append(element)
-        case .black:
-            color = .black
-            newRadius = element.radius * 2
-            newArray.append(element)
-        case .red:
-            color = .red
-            newRadius = element.radius
-        case .white:
-            color = .white
-            newRadius = element.radius
-            newArray.append(element)
-        default:
-            print("")
+    for circle in circles {
+        if circle.color == .white {
+            let whiteCircle = circle
+            changeCircle.append(whiteCircle)
+        } else if circle.color == .black {
+            var blackCircle = circle
+            let blackRadius = blackCircle.radius * 2
+            blackCircle.radius = blackRadius
+            changeCircle.append(blackCircle)
         }
     }
     
-    return newArray
+    for circle in circles {
+    if circle.color == .blue {
+        let blueCircle = circle
+        if let _ = changeCircle.first, let _ = changeCircle.last {
+            changeCircle.append(blueCircle)
+        }
+    } else if circle.color == .green {
+        var greenCircle = circle
+        let blue = Checker.Color.blue
+        greenCircle.color = blue
+        if let _ = changeCircle.first, let _ = changeCircle.last {
+            changeCircle.append(greenCircle)
+        }
+    }
+}
+    
+    return changeCircle
 }
 
  checker.checkSecondFunction (function: change)
@@ -129,37 +129,42 @@ func changeArrayOf(names: [String]) -> [String : [String]] {
         }
     }
     
-    for letter in arrayOfChar {
-        for name in names {
-            let firstCharacter = name.first
-            if firstCharacter == letter {
-                arrayOfNames.append(name)
+    for name in names {
+        let charName = name.first
+        for i in arrayOfChar {
+            if charName == i {
+                
             }
         }
-        let new = String(arrayOfChar)
-        
-        dictOfNames.updateValue(arrayOfNames, forKey: new)
-        
-        for i in dictOfNames {
-            let sortedDict = i.value.sorted(by: <)
-            for value in sortedDict {
-                if value.count <= 2 {
-                    dictOfNames.removeValue(forKey: i.key)
+        arrayOfNames.append(name)
+    }
+    
+    for i in arrayOfChar {
+      var newArray = [String]()
+        for name in arrayOfNames {
+            
+            if let first = name.first {
+                if i == first {
+                    
+                    newArray.append(name)
+                    let new = String(i)
+                    dictOfNames.updateValue(newArray, forKey: new)
                 }
             }
         }
     }
+
+        var sortedDict = [String: [String]]()
+        for i in dictOfNames {
+                if i.value.count < 2 {
+                    dictOfNames.removeValue(forKey: i.key)
+                } else {
+                    let sortedValue = i.value.sorted{ $0 > $1 }
+                    sortedDict.updateValue(sortedValue, forKey: i.key)
+            }
+        }
     
-return dictOfNames
+return sortedDict
 }
-
-/// Передайте в этот метод функцию, принимающую массив имен и преобразующую его по алгоритму:
-/// 1) Группирует имена в словарь, где ключом будет первая буква имен в виде String, а
-/// значением - массив имен начинающихся с этой буквы.
-/// Например: ["Вася", "Олег", "Вова"] -> ["В" : ["Вася", "Вова"], "О" : ["Олег"]]
-/// 2) Убирает группы в которых меньше двух элементов.
-/// 3) Сортирует элементы в каждой группе в обратном алфавитному порядке.
-/// Если ваше решение окажется правильным, то в консоли вы увидите еще одну часть кодового слова.
-
 
 checker.checkFourthFunction(function: changeArrayOf)
