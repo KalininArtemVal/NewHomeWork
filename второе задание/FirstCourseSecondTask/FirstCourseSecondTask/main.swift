@@ -31,21 +31,7 @@ func findEven(array: [Int]) -> (Int,Int) {
 
 checker.checkFirstFunction(function: findEven)
 
-/// Передайте в этот метод функцию, преобразующую массив окружностей по следующему алгоритму:
-/// белые окружности должны быть первыми
-/// радиус черных должен быть увеличен в 2 раза
-/// красные нужно убрать из результата
-/// зеленые перекрасить в синие
-/// затем разместить синие в конце массива
-/// Порядок окружностей ВНУТРИ СВОЕЙ ЦВЕТОВОЙ ГРУППЫ должен соответствовать тому порядку,
-/// в котором эти окружности располагались внутри своей цветовой группы в исходном массиве.
-/// Например: группа белых окружностей должна быть первой в итоговом массиве. При этом каждая
-/// белая окружность должна сохранять ровно тот же порядок относительно других белых окружностей,
-/// который был в исходном массиве.
-/// Если ваше решение окажется правильным то в консоли вы увидите еще одну часть кодового слова.
 
-
-// -------------------
 func change(circles: [Checker.Circle]) -> [Checker.Circle] {
 
 
@@ -90,39 +76,45 @@ func change(circles: [Checker.Circle]) -> [Checker.Circle] {
  /// указанным выше, то такой словарь должен отбрасываться. Если ваше решение окажется правильным
  /// то в консоли вы увидите еще одну часть кодового слова.
 
-
+/// Словарь в котором хранятся данные о сотруднике в виде:
+///
+///    {
+///       "fullName": String,
+///       "salary": String,
+///       "company": String
+///    }
  
 
-func changeArrayToStruct(array: [Checker.EmployeeData]) -> [Checker.Employee] {
+func changeToStruct(array: [Checker.EmployeeData]) -> [Checker.Employee] {
     
-    var valueArray = [Checker.Employee]()
-
+    var valueArray: [Checker.Employee] = []
+//    let correctElement = Checker.EmployeeData()
+    
     for element in array {
-            if let name = element["fullName"],
-                let salary = element["salary"],
-                let company = element["company"] {
-                let emp = Checker.Employee(fullName: name, salary: salary, company: company)
-                valueArray.append(emp)
+        if element.count == 3 {
+            if let name: String = element["fullName"],
+                let salary: String = element["salary"],
+                let company: String = element["company"] {
+                let employeer = Checker.Employee(fullName: name, salary: salary, company: company)
+                valueArray.append(employeer)
+            }
         }
     }
+    
     return valueArray
 }
 
-/// Передайте в этот метод функцию которая преобразует массив словарей в структуры Employee.
-/// Порядок сотрудников должен остаться тем же. При этом если формат данных не совпадает с
-/// указанным выше, то такой словарь должен отбрасываться. Если ваше решение окажется правильным
-/// то в консоли вы увидите еще одну часть кодового слова.
 
 
-checker.checkThirdFunction(function: changeArrayToStruct)
-//
-//
+checker.checkThirdFunction(function: changeToStruct)
+
+
 
 func changeArrayOf(names: [String]) -> [String : [String]] {
     var dictOfNames = [String: [String]]()
     var arrayOfNames = [String]()
     var arrayOfChar = [Character]()
-
+    
     for name in names {
         if let firstCharacter = name.first {
             arrayOfChar.append(firstCharacter)
@@ -140,7 +132,7 @@ func changeArrayOf(names: [String]) -> [String : [String]] {
     }
     
     for i in arrayOfChar {
-      var newArray = [String]()
+        var newArray = [String]()
         for name in arrayOfNames {
             
             if let first = name.first {
@@ -153,18 +145,18 @@ func changeArrayOf(names: [String]) -> [String : [String]] {
             }
         }
     }
-
-        var sortedDict = [String: [String]]()
-        for i in dictOfNames {
-                if i.value.count < 2 {
-                    dictOfNames.removeValue(forKey: i.key)
-                } else {
-                    let sortedValue = i.value.sorted{ $0 > $1 }
-                    sortedDict.updateValue(sortedValue, forKey: i.key)
-            }
-        }
     
-return sortedDict
+    var sortedDict = [String: [String]]()
+    for i in dictOfNames {
+        if i.value.count < 2 {
+            dictOfNames.removeValue(forKey: i.key)
+        } else {
+            let sortedValue = i.value.sorted{ $0 > $1 }
+            sortedDict.updateValue(sortedValue, forKey: i.key)
+        }
+    }
+    
+    return sortedDict
 }
 
 checker.checkFourthFunction(function: changeArrayOf)
